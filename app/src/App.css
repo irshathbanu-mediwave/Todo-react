@@ -2,17 +2,13 @@ body {
   background-color: #008dcc;
 }
 .container {
-  display: flex;
-  gap: 40px;
   margin: auto;
-  height: 500px;
   padding: 10px;
 }
-.Add-task {
-  display: flex;
+.content {
   padding: 30px;
   width: 500px;
-  height: 120px;
+  height: fit-content;
   border-radius: 10px;
   background-color: white;
 }
@@ -31,4 +27,11 @@ body {
 }
 .btn {
   margin-left: 50px;
+}
+.row-card {
+  display: flex;
+  gap: 20px;
+}
+.header {
+  display: flex;
 }

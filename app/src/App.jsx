@@ -1,26 +1,27 @@
 import Addtodolist from "./components/Todo";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import Done from "./components/Done";
 import Progess from "./components/Progess";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 function App() {
-  const [todos, dispatch] = useReducer(todoReducer, []);
-  function todoReducer(todos, action) {
+  const [tasks, dispatch] = useReducer(todoReducer, []);
+  const [data, setData] = useState("");
+
+  function todoReducer(tasks, action) {
     switch (action.type) {
-      case "TODO_ADD": {
+      case "TASK_ADD": {
         return [
-          ...todos,
+          ...tasks,
           {
             id: new Date().getTime(),
             text: action.value,
-            isDone: false,
-            isEdit: false,
+            instate: "todo",
           },
         ];
       }
-      case "TODO_DELETE": {
-        const filtredarray = todos.filter((t) => t.id !== action.value);
+      case "TASK_DELETE": {
+        const filtredarray = tasks.filter((t) => t.id !== action.value);
         return [...filtredarray];
       }
 
@@ -29,30 +30,39 @@ function App() {
       }
     }
   }
+  useEffect(() => {
+    localStorage.setItem("Todo-item", JSON.stringify(tasks));
+  });
   function handleAdd(value) {
     dispatch({
-      type: "TODO_ADD",
+      type: "TASK_ADD",
       value: value,
     });
   }
   function handleDelete(id) {
     dispatch({
-      type: "TODO_DELETE",
-      value: value,
+      type: "TASK_DELETE",
+      value: id,
     });
   }
   return (
     <>
       <div className="container">
-        <div className="row">
+        <div className="row-card">
           <div>
-            <Addtodolist />
-          </div>
-          <div>
-            <Done />
+            <Addtodolist
+              addTask={(text) => {
+                handleAdd(text);
+              }}
+              handledelete={handleDelete}
+              tasks={tasks}
+            />
           </div>
           <div>
             <Progess />
+          </div>
+          <div>
+            <Done />
           </div>
         </div>
       </div>
