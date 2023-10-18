@@ -1,19 +1,30 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState } from "react";
 
-function Addtodolist({ addTask, tasks, handledelete }) {
+function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
   const [value, setValue] = useState("");
+
   const addCard = () => {
     addTask(value);
-    setValue("");
   };
-  function handletextchange(newValue) {
-    setValue(newValue);
+
+  function handleedit(e) {
+    e.target.contentEditable = true;
+  }
+  function enterkeyPressed(event, newValue, id) {
+    if (event.keycode == 10) {
+      setValue(newValue);
+      handleedit(newValue, id);
+      event.target.contentEditable = false;
+      return true;
+    } else {
+      return false;
+    }
   }
   return (
     <>
       <div className="content">
-        <div class="header">
+        <div className="header">
           <div className="Title">
             <h1>Todo</h1>
           </div>
@@ -30,19 +41,23 @@ function Addtodolist({ addTask, tasks, handledelete }) {
               <div className="title">
                 Task:
                 <button
-                  className="delete-btn"
+                  className="btn btn-light"
                   onClick={() => handledelete(task.id)}
                 >
                   Delete
                 </button>
               </div>
-              <textarea
+              <div
+                className=" textarea"
                 key={task.id}
-              
                 contentEditable={true}
-                suppressContentEditableWarning={true}
-                onInput={(e) => handletextchange(e.target.innerHtml)}
-              />
+                onKeyDown={(e) =>
+                  enterkeyPressed(e, e.target.innerHTML, task.id)
+                }
+                onClick={(e) => handleedit(e)}
+                html={task.text}
+                required
+              ></div>
             </div>
           ))}
         </div>
@@ -58,3 +73,9 @@ export default Addtodolist;
 //   </value>,
 // ];
 // setValue(addvalue);
+// const [edit, Setedit] = useState(false);// function handletextchange(newValue) {
+//   setValue(newValue);
+// }
+// function handleedit() {
+//   Setedit("");
+// }
