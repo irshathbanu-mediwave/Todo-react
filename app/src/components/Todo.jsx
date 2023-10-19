@@ -1,9 +1,9 @@
 import "bootstrap/dist/css/bootstrap.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
   const [value, setValue] = useState("");
-
+  const [currentDate, SetcurrentTime] = useState(new Date());
   const addCard = () => {
     addTask(value);
   };
@@ -23,10 +23,16 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
   function handleedit(e) {
     e.target.contentEditable = true;
   }
+  useEffect(() => {
+    const Intervalid = setInterval(() => {
+      SetcurrentTime(new Date());
+    }, 1000);
+    return () => {
+      clearInterval(Intervalid);
+    };
+  }, []);
   return (
     <>
-     
-
       <button onClick={addCard} className="btn btn-light">
         +
       </button>
@@ -36,17 +42,24 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
           <div key={task.id} className="card" draggable>
             <div className="title">
               Task:
-              <button onClick={() => handledelete(task.id)}>Delete</button>
+              <button
+                className="delete-btn"
+                onClick={() => handledelete(task.id)}
+              >
+                Delete
+              </button>
             </div>
             <div
-              className=" textarea"
-              key={task.id}
+              className="textarea"
               contentEditable={true}
               onKeyDown={(e) => enterkeyPressed(e, e.target.innerHTML, task.id)}
               onClick={(e) => handleedit(e)}
               html={task.text}
               required
             ></div>
+            <div>
+              <h6>Task-time :{currentDate.toLocaleString()}</h6>
+            </div>
           </div>
         ))}
       </div>

@@ -14,16 +14,16 @@ function App() {
         return [
           ...tasks,
           {
-            id: uuidv4,
+            id: uuidv4(),
             text: "",
-            dateTime: new Date(),
+            // dateTime: new Date(),
             instate: "todo",
           },
         ];
       }
       case "TASK_DELETE": {
         const filtredarray = tasks.filter((t) => t.id !== action.value);
-        return [...filtredarray];
+        return filtredarray;
       }
       case "TASK_EDIT": {
         const Edittask = [...tasks];
@@ -50,13 +50,12 @@ function App() {
       value: value,
     });
   }
-  function handleDelete(id) {
+  function handledelete(id) {
+    console.log(id);
     dispatch({
       type: "TASK_DELETE",
-
       value: id,
     });
-    console.log(id);
   }
   function handleedit(newvalue, id) {
     dispatch({
@@ -69,21 +68,21 @@ function App() {
       <h1 className="title-drello">Drello App </h1>
       <div className="container">
         <div className="row">
-          <div className="col  Todocontainer">
+          <div className="col  Todo-Card">
             <h2> Todo</h2>
             <Addtodolist
               addTask={(text) => {
                 handleAdd(text);
               }}
-              handledelete={handleDelete}
+              handledelete={handledelete}
               tasks={tasks}
               handleedit={handleedit}
             />
           </div>
-          <div className="col">
+          <div className="col Progess-card">
             <Progess />
           </div>
-          <div className="col">
+          <div className="col Done-card">
             <Done />
           </div>
         </div>
