@@ -7,9 +7,9 @@ import "./App.css";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  // const initial = getStorage();
-  // console.log(initial);
-  const [tasks, dispatch] = useReducer(todoReducer, []);
+  const initial = getStorage();
+   console.log(initial);
+  const [tasks, dispatch] = useReducer(todoReducer, initial);
   useEffect(() => {
     saveLocal(tasks);
   }, [tasks]);

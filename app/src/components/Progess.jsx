@@ -1,10 +1,15 @@
-function Progess({ dragUpdate }) {
-  const sortitem = (id) => {
-    dragUpdate(dragItem.current, dragOverItem.current, id);
+import { useState, useRef } from "react";
+
+function Progess({ tasks, handledelete }) {
+  const onDragStart = (event, id) => {
+    console.log("dragstart", id);
+    event.dataTransfer.setData("id", id);
   };
   return (
     <>
-      <h3>Progess</h3>
+      <div className="show-card">
+        {tasks.filter((t) => t.inState === "progess")}
+      </div>
     </>
   );
 }

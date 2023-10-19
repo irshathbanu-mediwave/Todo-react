@@ -1,14 +1,9 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState, useEffect, useRef } from "react";
 
-function Addtodolist({ addTask, tasks, handledelete, handleedit, dragUpadte }) {
+function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
   const [value, setValue] = useState("");
-  // const [currentDate, SetcurrentTime] = useState(new Date());
-  const dragItem = useRef(null);
-  const dragOverItem = useRef(null);
-  const sortitem = (id) => {
-    dragUpadte(dragItem.current, dragOverItem.current, id);
-  };
+
   const addCard = () => {
     addTask(value);
   };
@@ -24,6 +19,7 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit, dragUpadte }) {
   var minutes = d.getMinutes();
   var finalTime = hours + ":" + minutes + " " + AmOrPm;
   finalTime; // final time Time - 22:10
+
   function enterkeyPressed(event, value, id) {
     if (event.keycode == 10) {
       setValue(value);
@@ -37,14 +33,11 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit, dragUpadte }) {
   function handleedit(e) {
     e.target.contentEditable = true;
   }
-  // useEffect(() => {
-  //   const Intervalid = setInterval(() => {
-  //     SetcurrentTime(new Date());
-  //   });
-  //   return () => {
-  //     clearInterval(Intervalid);
-  //   };
-  // }, []);
+  const onDragStart = (event, id) => {
+    console.log("dragstart", id);
+    event.dataTransfer.setData("id", id);
+  };
+
   return (
     <>
       <div className="whole">
@@ -60,48 +53,60 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit, dragUpadte }) {
         </div>
 
         <div className="show-card">
-          {tasks.map((task, index) => (
-            <div
-              key={task.id}
-              className="card"
-              draggable
-              onDragStart={(e) => {
-                dragItem.current = index;
-              }}
-              onDragEnter={(e) => {
-                dragOverItem.current = index;
-              }}
-              onDragEnd={() => sortitem(task.id)}
-            >
-              <div className="title">
-                Task:
-                <button
-                  className="delete-btn"
-                  onClick={() => handledelete(task.id)}
-                >
-                  X
-                </button>
-              </div>
+          {tasks
+            .filter((t) => t.inState === "todo")
+            .map((task, index) => (
               <div
-                className="textarea"
-                contentEditable={true}
-                onKeyDown={(e) =>
-                  enterkeyPressed(e, e.target.innerHTML, task.id)
-                }
-                onClick={(e) => handleedit(e)}
-                html={task.text}
-              ></div>
-              <div>
-                <h6>
-                  Task-time
-                  {str},{finalTime}
-                </h6>
+                key={task.id}
+                className="card"
+                draggable
+                onDragStart={(e) => {
+                  onDragStart(e, task.id);
+                }}
+              >
+                <div className="title">
+                  Task:
+                  <button
+                    className="delete-btn"
+                    onClick={() => handledelete(task.id)}
+                  >
+                    X
+                  </button>
+                </div>
+                <div
+                  className="textarea"
+                  onKeyDown={(e) =>
+                    enterkeyPressed(e, e.target.innerHTML, task.id)
+                  }
+                  onClick={(e) => handleedit(e)}
+                >
+                  {task.text}
+                </div>
+                <div>
+                  <h6>
+                    Task-time
+                    {str},{finalTime}
+                  </h6>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </>
   );
 }
 export default Addtodolist;
+// /const [currentDate, SetcurrentTime] = useState(new Date());
+// const dragItem = useRef(null);
+// const dragOverItem = useRef(null);
+// const sortitem = (id) => {
+//   dragUpadte(dragItem.current, dragOverItem.current, id);
+// };
+// useEffect(() => {
+//   const Intervalid = setInterval(() => {
+//     SetcurrentTime(new Date());
+//   });
+//   return () => {
+//     clearInterval(Intervalid);
+//   };
+// }, []);
