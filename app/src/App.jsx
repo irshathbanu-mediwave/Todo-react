@@ -80,7 +80,7 @@ function App() {
       value: { value, id },
     });
   }
-  function dragupdate(dragItemcurrent, dragoverItemcurrent, id) {
+  function dragUpdate(dragItemcurrent, dragoverItemcurrent, id) {
     dispatch({
       type: "TASK_DRAG",
       value: { dragItemcurrent, dragoverItemcurrent, id },
@@ -102,14 +102,14 @@ function App() {
               handledelete={handledelete}
               tasks={tasks}
               handleedit={handleedit}
-              dragupadte={dragupdate}
+              dragUpadte={dragUpdate}
             />
           </div>
           <div className="col Progess-card">
-            <Progess dragUpdate={dragupdate} />
+            <Progess dragUpdate={dragUpdate} />
           </div>
           <div className="col Done-card">
-            <Done dragUpdate={dragupdate} />
+            <Done dragUpdate={dragUpdate} />
           </div>
         </div>
       </div>

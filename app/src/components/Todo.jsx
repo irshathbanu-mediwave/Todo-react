@@ -5,9 +5,9 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit, dragUpadte }) {
   const [value, setValue] = useState("");
   // const [currentDate, SetcurrentTime] = useState(new Date());
   const dragItem = useRef(null);
-  const dragOveritem = useRef(null);
+  const dragOverItem = useRef(null);
   const sortitem = (id) => {
-    dragUpadte(dragItem.current, dragOveritem.current, id);
+    dragUpadte(dragItem.current, dragOverItem.current, id);
   };
   const addCard = () => {
     addTask(value);
@@ -69,9 +69,9 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit, dragUpadte }) {
                 dragItem.current = index;
               }}
               onDragEnter={(e) => {
-                dragOveritem.current = index;
+                dragOverItem.current = index;
               }}
-              onDragEnd={() => sortitem}
+              onDragEnd={() => sortitem(task.id)}
             >
               <div className="title">
                 Task:

@@ -1,13 +1,10 @@
 function Progess({ dragUpdate }) {
   const sortitem = (id) => {
-    dragUpdate(dragItem.current, dragOveritem.current, id);
+    dragUpdate(dragItem.current, dragOverItem.current, id);
   };
   return (
     <>
-      <div className="progess-cardss">
-        <h3>Progess </h3>
-        <p>Buy Grocery</p>
-      </div>
+      <h3>Progess</h3>
     </>
   );
 }
