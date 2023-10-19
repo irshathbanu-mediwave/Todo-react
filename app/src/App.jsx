@@ -22,7 +22,7 @@ function App() {
         ];
       }
       case "TASK_DELETE": {
-        const filtredarray = tasks.filter((t) => t.id != action.value);
+        const filtredarray = tasks.filter((t) => t.id != action.id);
         return [...filtredarray];
       }
       case "TASK_EDIT": {
@@ -47,7 +47,7 @@ function App() {
   function handleAdd() {
     dispatch({
       type: "TASK_ADD",
-      // value: value,
+      value: value,
     });
   }
   function handleDelete(id) {
@@ -58,7 +58,7 @@ function App() {
     });
     console.log(id);
   }
-  function handleedit() {
+  function handleedit(newvalue, id) {
     dispatch({
       type: "TASK_EDIT",
       value: { newvalue, id },
@@ -66,9 +66,11 @@ function App() {
   }
   return (
     <>
+      <h1 className="title-drello">Drello App </h1>
       <div className="container">
-        <div className="row-card">
-          <div>
+        <div className="row">
+          <div className="col  Todocontainer">
+            <h2> Todo</h2>
             <Addtodolist
               addTask={(text) => {
                 handleAdd(text);
@@ -78,10 +80,10 @@ function App() {
               handleedit={handleedit}
             />
           </div>
-          <div>
+          <div className="progess-card">
             <Progess />
           </div>
-          <div>
+          <div className="done-card">
             <Done />
           </div>
         </div>
