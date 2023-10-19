@@ -22,7 +22,7 @@ function App() {
         ];
       }
       case "TASK_DELETE": {
-        const filtredarray = tasks.filter((t) => t.id != action.id);
+        const filtredarray = tasks.filter((t) => t.id !== action.value);
         return [...filtredarray];
       }
       case "TASK_EDIT": {
@@ -44,7 +44,7 @@ function App() {
   //   localStorage.setItem("Todo-item", JSON.stringify(tasks));
   // }, [tasks]);
 
-  function handleAdd() {
+  function handleAdd(value) {
     dispatch({
       type: "TASK_ADD",
       value: value,
@@ -80,10 +80,10 @@ function App() {
               handleedit={handleedit}
             />
           </div>
-          <div className="progess-card">
+          <div className="col">
             <Progess />
           </div>
-          <div className="done-card">
+          <div className="col">
             <Done />
           </div>
         </div>

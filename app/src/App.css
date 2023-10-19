@@ -1,37 +1,12 @@
-body {
-  background-color: #008dcc;
-}
 .container {
-  margin: auto;
-  padding: 10px;
-}
-.content {
-  padding: 30px;
-  width: 500px;
-  height: fit-content;
-  border-radius: 10px;
-  background-color: white;
-}
-.progess-card {
-  padding: 20px;
-  border-radius: 10px;
-  background-color: white;
-  width: 500px;
+  margin: 20px 50px;
+  background-color: #008dcc;
+  color: white;
+  border-radius: 15px;
 }
 
-.done-card {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 500px;
-}
-.btn {
-  margin-left: 50px;
-}
-.row-card {
-  display: flex;
-  gap: 20px;
-}
-.header {
-  display: flex;
+.title-drello {
+  text-align: center;
+  color: white;
+  background-color: black;
 }

@@ -25,7 +25,7 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
   }
   return (
     <>
-      <h1>Todo</h1>
+     
 
       <button onClick={addCard} className="btn btn-light">
         +
