@@ -5,9 +5,25 @@ import Progess from "./components/Progess";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
-function App() {
-  const [tasks, dispatch] = useReducer(todoReducer, []);
 
+function App() {
+  // const initial = getStorage();
+  // console.log(initial);
+  const [tasks, dispatch] = useReducer(todoReducer, []);
+  useEffect(() => {
+    saveLocal(tasks);
+  }, [tasks]);
+  function getStorage() {
+    const getvalue = localStorage.getItem("Tasks-list");
+    console.log(getvalue);
+    if (getvalue) {
+      return JSON.parse(getvalue);
+    }
+    return [];
+  }
+  function saveLocal(tasks) {
+    localStorage.setItem("Tasks-list", JSON.stringify(tasks));
+  }
   function todoReducer(tasks, action) {
     switch (action.type) {
       case "TASK_ADD": {
@@ -29,10 +45,15 @@ function App() {
         const Edittask = [...tasks];
         const elementedit = Edittask.findIndex((t) => t.id === action.value.id);
         if (elementedit !== -1) {
-          Edittask[elementedit].text = action.value.newvalue;
+          Edittask[elementedit].text = action.value.value;
           Edittask[elementedit].dateTime = new Date();
         }
         return Edittask;
+      }
+      case "TASK_DRAG": {
+        let newtodo = [...tasks];
+        newtodo[action.value.dragItemcurrent].instate = "progess";
+        return newtodo;
       }
 
       default: {
@@ -53,19 +74,27 @@ function App() {
       value: id,
     });
   }
-  function handleedit(newvalue, id) {
+  function handleedit(value, id) {
     dispatch({
       type: "TASK_EDIT",
-      value: { newvalue, id },
+      value: { value, id },
     });
   }
+  function dragupdate(dragItemcurrent, dragoverItemcurrent, id) {
+    dispatch({
+      type: "TASK_DRAG",
+      value: { dragItemcurrent, dragoverItemcurrent, id },
+    });
+  }
+  // useEffect(() => {
+  //   localStorage.setItem("tasks", JSON.stringify(tasks));
+  // }, [tasks]);
   return (
     <>
       <h1 className="title-drello">Drello App </h1>
       <div className="container">
         <div className="row">
           <div className="col  Todo-Card">
-            <h2> Todo</h2>
             <Addtodolist
               addTask={(text) => {
                 handleAdd(text);
@@ -73,13 +102,14 @@ function App() {
               handledelete={handledelete}
               tasks={tasks}
               handleedit={handleedit}
+              dragupadte={dragupdate}
             />
           </div>
           <div className="col Progess-card">
-            <Progess />
+            <Progess dragUpdate={dragupdate} />
           </div>
           <div className="col Done-card">
-            <Done />
+            <Done dragUpdate={dragupdate} />
           </div>
         </div>
       </div>
@@ -89,3 +119,27 @@ function App() {
 
 export default App;
 //  Getstorage; Getstorage;
+// useEffect(() => {
+//   const savedTasks = localStorage.getItem("tasks");
+//   if (savedTasks) {
+//     dispatch({ type: "TASK-SAVE", value: JSON.parse(savedTasks) });
+//   }
+//   console.log(savedTasks);
+// }, []);
+// useEffect(() => {
+//   localStorage.setItem("tasks", JSON.stringify(tasks));
+// }, [tasks]);
+// useEffect(() => {
+//   // Get tasks from local storage when the component mounts
+//   const savedTasks = localStorage.getItem("tasks");
+//   if (savedTasks) {
+//     dispatch({ type: "TASK_LOAD", value: JSON.parse(savedTasks) });
+//   }
+// }, []);
+//
+// function getstorage() {
+//   return JSON.stringify(localStorage.getItem("Task-list") || []);
+// }
+// useEffect(() => {
+//   localStorage.setItem("Task-list", JSON.stringify(tasks));
+// }, [tasks]);

@@ -1,4 +1,7 @@
-function Done() {
+function Done({ dragUpdate }) {
+  const sortitem = (id) => {
+    dragUpdate(dragItem.current, dragOveritem.current, id);
+  };
   return (
     <>
       <div className="done-cardsss">
@@ -8,4 +11,4 @@ function Done() {
     </>
   );
 }
-export default Done
+export default Done;

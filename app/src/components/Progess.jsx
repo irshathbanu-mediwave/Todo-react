@@ -1,4 +1,7 @@
-function Progess() {
+function Progess({ dragUpdate }) {
+  const sortitem = (id) => {
+    dragUpdate(dragItem.current, dragOveritem.current, id);
+  };
   return (
     <>
       <div className="progess-cardss">
