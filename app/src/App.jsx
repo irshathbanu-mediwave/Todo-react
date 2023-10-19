@@ -16,7 +16,7 @@ function App() {
           {
             id: uuidv4(),
             text: "",
-            // dateTime: new Date(),
+            dateTime: new Date(),
             instate: "todo",
           },
         ];
@@ -40,10 +40,6 @@ function App() {
       }
     }
   }
-  // useEffect(() => {
-  //   localStorage.setItem("Todo-item", JSON.stringify(tasks));
-  // }, [tasks]);
-
   function handleAdd(value) {
     dispatch({
       type: "TASK_ADD",

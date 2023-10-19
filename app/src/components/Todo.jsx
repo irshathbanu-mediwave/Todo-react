@@ -26,7 +26,7 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
   useEffect(() => {
     const Intervalid = setInterval(() => {
       SetcurrentTime(new Date());
-    }, 1000);
+    });
     return () => {
       clearInterval(Intervalid);
     };
