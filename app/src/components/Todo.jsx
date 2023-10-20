@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
   const [value, setValue] = useState("");
 
-  const addCard = () => {
+  const addCard = (value) => {
     addTask(value);
   };
   const d = new Date();
@@ -20,9 +20,10 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
   var finalTime = hours + ":" + minutes + " " + AmOrPm;
   finalTime; // final time Time - 22:10
 
-  function enterkeyPressed(event, value, id) {
+  function enterkeyPressed(event, newvalue, id) {
     if (event.keycode == 10) {
-      setValue(value);
+      setValue(newvalue);
+      // console.log(value);
       handleedit(value, id);
       event.target.contentEditable = false;
       return true;
@@ -45,8 +46,11 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
           <div className="title-todo">
             <h1>To-do</h1>
           </div>
-          <div className="delete-btn">
-            <button onClick={addCard} className="btn btn-light delete-button">
+          <div className="add-btn">
+            <button
+              onClick={() => addCard(value)}
+              className="btn btn-light add-button"
+            >
               +
             </button>
           </div>
@@ -54,7 +58,7 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
 
         <div className="show-card">
           {tasks
-            .filter((t) => t.inState === "todo")
+            .filter((t) => t.inState == "todo")
             .map((task, index) => (
               <div
                 key={task.id}
@@ -78,10 +82,10 @@ function Addtodolist({ addTask, tasks, handledelete, handleedit }) {
                   onKeyDown={(e) =>
                     enterkeyPressed(e, e.target.innerHTML, task.id)
                   }
+                  contentEditable={true}
                   onClick={(e) => handleedit(e)}
-                >
-                  {task.text}
-                </div>
+                  html={task.text}
+                ></div>
                 <div>
                   <h6>
                     Task-time
