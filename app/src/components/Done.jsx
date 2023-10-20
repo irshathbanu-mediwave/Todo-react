@@ -1,14 +1,42 @@
-function Done({ dragUpdate }) {
-  const sortitem = (id) => {
-    dragUpdate(dragItem.current, dragOveritem.current, id);
+function Done({ tasks, handledelete }) {
+  const ondragstart = (event, id) => {
+    console.log("id-done", id);
+    event.dataTransfer.setData("id", id);
   };
   return (
     <>
-      <div className="done-cardsss">
-        <h2>Done</h2>
-        <p>Finish Assignment</p>
+      <div className="showCards">
+        {tasks
+          .filter((t) => t.inState === "done")
+          .map((task, index) => (
+            <div
+              key={task.id}
+              className="card"
+              draggable
+              onDragStart={(e) => {
+                ondragstart(e, task.id);
+              }}
+            >
+              <div className="title-bar">
+                Task:
+                <button
+                  className="btn btn-danger Deletebtn"
+                  onClick={() => {
+                    handledelete(task.id);
+                  }}
+                >
+                  x
+                </button>
+              </div>
+
+              <div className="textarea" key={task.id}>
+                {task.text}
+              </div>
+            </div>
+          ))}
       </div>
     </>
   );
 }
+
 export default Done;
