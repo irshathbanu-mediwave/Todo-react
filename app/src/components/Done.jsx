@@ -20,7 +20,7 @@ function Done({ tasks, handledelete }) {
               <div className="title-bar">
                 Task:
                 <button
-                  className="btn btn-danger Deletebtn"
+                  className="btn btn"
                   onClick={() => {
                     handledelete(task.id);
                   }}

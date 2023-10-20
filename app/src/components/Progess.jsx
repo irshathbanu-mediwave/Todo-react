@@ -20,7 +20,7 @@ function progess({ tasks, handledelete }) {
               <div className="title-bar">
                 Task:
                 <button
-                  className="btn btn-danger Deletebtn"
+                  className="btn "
                   onClick={() => {
                     handledelete(task.id);
                   }}
